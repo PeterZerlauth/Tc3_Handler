@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="E_Type" Id="{54ce692b-d491-491d-b29d-c89e007564ea}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+{attribute 'strict'}
+TYPE E_Type :
+(
+	None 			:= 0,
+	Emergencey		:= 1,
+	Error			:= 2,
+	Stop			:= 3,
+	Cycle			:= 4
+)USINT;
+END_TYPE]]></Declaration>
+  </DUT>
+</TcPlcObject>

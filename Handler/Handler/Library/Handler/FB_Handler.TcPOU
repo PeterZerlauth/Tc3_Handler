@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_Handler" Id="{5b555d9d-9f1a-4168-ace2-3a53af448bf3}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ABSTRACT FB_Handler IMPLEMENTS I_Handler
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	iNextHandler:			I_Handler;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//	The FB_Handler is an abstract function block that implements the I_Handler interface. 
+//	It represents a handler in the Chain of Responsibility pattern,
+//	where a request can be passed along a chain of potential handlers until one of them handles the request.
+//	Each handler in the chain has the ability to either handle the request or pass it to the next handle]]></ST>
+    </Implementation>
+    <Method Name="M_Request" Id="{0dbdffe3-6983-4b80-bcf0-f4c7d261385e}">
+      <Declaration><![CDATA[METHOD PUBLIC M_Request
+VAR_INPUT
+	stEvent:			ST_Event;		// event to be handled. 
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// The M_Request method is used to handle the request.
+
+IF iNextHandler <> 0 THEN
+	// the request is passed to the next handler 
+	iNextHandler.M_Request(stEvent);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="M_SetNext" Id="{2277a74c-b100-4336-aa47-a0aa9f65da8c}">
+      <Declaration><![CDATA[METHOD PUBLIC M_SetNext
+VAR_INPUT
+	iHandler:				I_Handler;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// next handler in the chain
+iNextHandler:= iHandler;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_Handler">
+      <LineId Id="57" Count="3" />
+    </LineIds>
+    <LineIds Name="FB_Handler.M_Request">
+      <LineId Id="30" Count="1" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="25" Count="1" />
+    </LineIds>
+    <LineIds Name="FB_Handler.M_SetNext">
+      <LineId Id="9" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="MAIN" Id="{e5f7a5a1-3f48-4670-a47b-5f2ccf40d0d9}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	fbEvent:		FB_Event;
+	fbHandler:		FB_Events;
+	bInit:			BOOL:= TRUE;;
+	bEvent: 		BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF bInit THEN
+	bInit:= FALSE;
+	fbEvent.P_Handler:= fbHandler;
+END_IF
+
+fbHandler();
+
+IF bEvent THEN
+	fbEvent.M_Critical(E_Type.Error, 'Message', 1);
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="56" Count="1" />
+      <LineId Id="71" Count="0" />
+      <LineId Id="58" Count="0" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="66" Count="0" />
+      <LineId Id="65" Count="0" />
+      <LineId Id="67" Count="1" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
