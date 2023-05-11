@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_Handler" Id="{5b555d9d-9f1a-4168-ace2-3a53af448bf3}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ABSTRACT FB_Handler IMPLEMENTS I_Handler
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	iHandler:			I_Handler;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//	The FB_Handler is an abstract function block that implements the I_Handler interface. 
+//	It represents a handler in the Chain of Responsibility pattern,
+//	where a request can be passed along a chain of potential handlers until one of them handles the request.
+//	Each handler in the chain has the ability to either handle the request or pass it to the next handle]]></ST>
+    </Implementation>
+    <Method Name="M_Request" Id="{0dbdffe3-6983-4b80-bcf0-f4c7d261385e}">
+      <Declaration><![CDATA[METHOD PUBLIC M_Request
+VAR_INPUT
+	stEvent:			ST_Event;		// event to be handled. 
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[// The M_Request method is used to handle the request.
+
+IF iHandler <> 0 THEN
+	// the request is passed to the next handler 
+	iHandler.M_Request(stEvent);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="P_Next" Id="{7ff99411-1a84-4185-85aa-4402ac2d8019}">
+      <Declaration><![CDATA[PROPERTY PUBLIC P_Next : I_Handler]]></Declaration>
+      <Get Name="Get" Id="{262dea57-9b75-424c-8b01-075b56fa6082}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[P_Next:= iHandler;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{8eeb1271-99e0-4fef-96c2-4dae70885f83}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[iHandler:= P_Next;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <LineIds Name="FB_Handler">
+      <LineId Id="57" Count="3" />
+    </LineIds>
+    <LineIds Name="FB_Handler.M_Request">
+      <LineId Id="30" Count="1" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="25" Count="1" />
+    </LineIds>
+    <LineIds Name="FB_Handler.P_Next.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_Handler.P_Next.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

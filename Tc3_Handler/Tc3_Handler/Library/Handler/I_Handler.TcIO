@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="I_Handler" Id="{76c924fb-9512-49da-9ecf-f9832661e458}">
+    <Declaration><![CDATA[INTERFACE I_Handler
+]]></Declaration>
+    <Method Name="M_Request" Id="{a20fe26c-2355-4f10-b0a3-ae027dfea6fe}">
+      <Declaration><![CDATA[METHOD PUBLIC M_Request
+VAR_INPUT
+	stEvent:			ST_Event;
+END_VAR]]></Declaration>
+    </Method>
+    <Property Name="P_Next" Id="{48611710-ff4c-4320-a1e6-09e5151902e2}">
+      <Declaration><![CDATA[PROPERTY PUBLIC P_Next : I_Handler]]></Declaration>
+      <Get Name="Get" Id="{23236f31-1abe-42e1-b70f-a139733fd44f}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{45804c4f-a0a1-4b87-b396-4a6ed6ee4597}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+  </Itf>
+</TcPlcObject>

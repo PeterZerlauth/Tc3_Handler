@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_EventHandler" Id="{a7ae2211-d1a6-49e2-82c8-5c610d8a7c9d}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_EventHandler EXTENDS FB_Handler
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+	bDebug:			BOOL;
+	bInfo:			BOOL;
+	bWarning:		BOOL;
+	bError:			BOOL;
+END_VAR
+VAR
+	nLength:		INT;
+	aEvents:		ARRAY [0..100] OF ST_Event;
+	nIndex: 		INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[SUPER^();
+nIndex:= 0;
+WHILE nIndex < nLength DO
+	IF aEvents[nIndex].bActive THEN
+		aEvents[nIndex].bActive:= FALSE;
+	ELSE
+		M_Remove(nIndex);
+	END_IF
+	nIndex := nIndex + 1;
+END_WHILE
+bDebug:= FALSE;
+bInfo:= FALSE;
+bWarning:= FALSE;
+bError:= FALSE;]]></ST>
+    </Implementation>
+    <Method Name="M_Find" Id="{bb4df97c-6e38-4cd5-bdfc-6c0b84052df0}">
+      <Declaration><![CDATA[METHOD PRIVATE M_Find : INT
+VAR_INPUT
+	stEvent:			ST_Event;		// event to find
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[M_Find := -1;
+nIndex:= 0;
+WHILE nIndex < nLength DO
+    IF aEvents[nIndex].eEvent = stEvent.eEvent AND_THEN aEvents[nIndex].sMessage = stEvent.sMessage THEN
+        M_Find := nIndex;
+        RETURN;
+    END_IF
+	nIndex := nIndex + 1;
+END_WHILE]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="M_Remove" Id="{78bc2cb4-2b52-4154-8478-d32962040d8c}">
+      <Declaration><![CDATA[METHOD PRIVATE M_Remove
+VAR_INPUT
+	nPosition:			INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[memcpy(ADR(aEvents[nIndex]), ADR(aEvents[nPosition + 1]), (SIZEOF(ST_Event) * (100  - nPosition)));
+nLength:= nLength - 1; ]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="M_Request" Id="{fd7a157e-fd8c-45f8-a7bc-2309e3dc7519}">
+      <Declaration><![CDATA[METHOD PUBLIC M_Request
+VAR_INPUT
+	stEvent:			ST_Event;		// event to be handled. 
+END_VAR
+VAR
+	nFind:				INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF nLength < 100 THEN
+	nFind:= M_Find(stEvent);
+	IF nFind = -1 THEN
+		aEvents[nLength]:= stEvent;
+		nLength:= nLength + 1;
+	ELSE
+		aEvents[nFind]:= stEvent;
+		CASE aEvents[nFind].eEvent OF
+			E_Event.Debug:
+				bDebug:= TRUE;
+			E_Event.Info:
+				bInfo:= TRUE;
+			E_Event.Warning:
+				bWarning:= TRUE;
+			E_Event.Error:
+				bError:= TRUE;
+		END_CASE
+		
+	END_IF
+END_IF
+
+SUPER^.M_Request(stEvent);]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_EventHandler">
+      <LineId Id="9" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="57" Count="0" />
+      <LineId Id="56" Count="0" />
+      <LineId Id="48" Count="0" />
+      <LineId Id="50" Count="0" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="62" Count="3" />
+    </LineIds>
+    <LineIds Name="FB_EventHandler.M_Find">
+      <LineId Id="20" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="21" Count="5" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_EventHandler.M_Remove">
+      <LineId Id="5" Count="0" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_EventHandler.M_Request">
+      <LineId Id="28" Count="5" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="46" Count="3" />
+      <LineId Id="42" Count="0" />
+      <LineId Id="40" Count="0" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="26" Count="1" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

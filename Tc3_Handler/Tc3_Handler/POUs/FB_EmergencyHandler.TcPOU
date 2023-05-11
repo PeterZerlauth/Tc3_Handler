@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_EmergencyHandler" Id="{245b64b1-fb15-458b-96e4-a8a3c965e319}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_EmergencyHandler EXTENDS FB_Handler
+VAR_INPUT
+	bReset:			BOOL;
+END_VAR
+VAR_OUTPUT
+	bOutput:		BOOL;
+END_VAR
+VAR
+	bResetOld: 		BOOL:= TRUE;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[SUPER^();
+IF bReset AND NOT bResetOld THEN
+	bOutput:= TRUE;
+END_IF
+bResetOld:= bReset;]]></ST>
+    </Implementation>
+    <Method Name="M_Request" Id="{0f74ac42-a814-4c7f-93b6-623c2e10cb5e}">
+      <Declaration><![CDATA[METHOD PUBLIC M_Request
+VAR_INPUT
+	stEvent:			ST_Event;		// event to be handled. 
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF stEvent.sMessage = 'Emergency Stop' THEN
+	bOutput:= FALSE;
+END_IF
+
+SUPER^.M_Request(stEvent);]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_EmergencyHandler">
+      <LineId Id="9" Count="0" />
+      <LineId Id="92" Count="0" />
+      <LineId Id="94" Count="1" />
+      <LineId Id="98" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_EmergencyHandler.M_Request">
+      <LineId Id="28" Count="0" />
+      <LineId Id="30" Count="1" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
