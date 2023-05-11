@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_TcLoggerHandler" Id="{f8a57a06-ef70-4bb8-94fe-c0bb0d78a6cc}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_TcLoggerHandler EXTENDS FB_Handler
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[SUPER^();]]></ST>
+    </Implementation>
+    <Method Name="M_Request" Id="{adf3dd9b-244f-44a9-8444-44a7adbab493}">
+      <Declaration><![CDATA[METHOD PUBLIC M_Request
+VAR_INPUT
+	stEvent:			ST_Event;		// event to be handled. 
+END_VAR
+VAR
+	nFind:				INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF stEvent.bEvent THEN
+	CASE stEvent.eEvent OF
+		E_Event.Debug:
+			ADSLOGSTR(ADSLOG_MSGTYPE_HINT OR ADSLOG_MSGTYPE_LOG, stEvent.sMessage, '');
+		E_Event.Info:
+			ADSLOGSTR(ADSLOG_MSGTYPE_HINT OR ADSLOG_MSGTYPE_LOG, stEvent.sMessage, '');
+		E_Event.Warning:
+			ADSLOGSTR(ADSLOG_MSGTYPE_WARN OR ADSLOG_MSGTYPE_LOG, stEvent.sMessage, '');
+		E_Event.Error:
+			ADSLOGSTR(ADSLOG_MSGTYPE_ERROR OR ADSLOG_MSGTYPE_LOG, stEvent.sMessage, '');
+	END_CASE
+END_IF
+
+SUPER^.M_Request(stEvent);]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_TcLoggerHandler">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_TcLoggerHandler.M_Request">
+      <LineId Id="57" Count="0" />
+      <LineId Id="60" Count="1" />
+      <LineId Id="63" Count="6" />
+      <LineId Id="62" Count="0" />
+      <LineId Id="59" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

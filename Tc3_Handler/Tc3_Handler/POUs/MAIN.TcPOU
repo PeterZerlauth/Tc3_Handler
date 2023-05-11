@@ -5,6 +5,7 @@
 VAR
 	fbEvent:				FB_Event;
 	fbEventHandler:			FB_EventHandler;
+	fbTcLoggerHandler:		FB_TcLoggerHandler;	
 	fbEmergencyHandler:		FB_EmergencyHandler;
 	bInit:					BOOL:= TRUE;
 	bDebug:					BOOL;
@@ -17,10 +18,12 @@ END_VAR]]></Declaration>
 	bInit:= FALSE;
 	fbEvent.P_Handler:= fbEventHandler;
 	fbEventHandler.P_Next:= fbEmergencyHandler;
+	fbEmergencyHandler.P_Next:= fbTcLoggerHandler;
 END_IF
 
 fbEvent();
 fbEventHandler();
+fbTcLoggerHandler();
 fbEmergencyHandler();
 
 IF bDebug THEN
@@ -42,7 +45,11 @@ END_IF
 ]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
-      <LineId Id="154" Count="25" />
+      <LineId Id="154" Count="3" />
+      <LineId Id="191" Count="0" />
+      <LineId Id="158" Count="3" />
+      <LineId Id="193" Count="0" />
+      <LineId Id="162" Count="17" />
       <LineId Id="79" Count="0" />
     </LineIds>
   </POU>

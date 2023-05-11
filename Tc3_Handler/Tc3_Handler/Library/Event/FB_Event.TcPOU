@@ -48,6 +48,7 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[stDebug.bActive:= TRUE;
+stDebug.bEvent:= FALSE;
 IF stDebug.nTimestamp = 0 THEN
 	stDebug.nTimestamp:= F_GetSystemTime();
 	stDebug.bEvent:= TRUE;
@@ -70,6 +71,7 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[stError.bActive:= TRUE;
+stError.bEvent:= FALSE;
 IF stError.nTimestamp = 0 THEN
 	stError.nTimestamp:= F_GetSystemTime();
 	stError.bEvent:= TRUE;
@@ -92,6 +94,7 @@ END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[stInfo.bActive:= TRUE;
+stInfo.bEvent:= FALSE;
 IF stInfo.nTimestamp = 0 THEN
 	stInfo.nTimestamp:= F_GetSystemTime();
 	stInfo.bEvent:= TRUE;
@@ -113,6 +116,7 @@ VAR_INPUT
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[stWarning.bActive:= TRUE;
+stWarning.bEvent:= FALSE;
 IF stWarning.nTimestamp = 0 THEN
 	stWarning.nTimestamp:= F_GetSystemTime();
 	stWarning.bEvent:= TRUE;
@@ -151,6 +155,7 @@ END_VAR
     </LineIds>
     <LineIds Name="FB_Event.M_Debug">
       <LineId Id="19" Count="0" />
+      <LineId Id="38" Count="0" />
       <LineId Id="13" Count="1" />
       <LineId Id="32" Count="0" />
       <LineId Id="15" Count="1" />
@@ -161,6 +166,7 @@ END_VAR
     </LineIds>
     <LineIds Name="FB_Event.M_Error">
       <LineId Id="21" Count="0" />
+      <LineId Id="35" Count="0" />
       <LineId Id="15" Count="1" />
       <LineId Id="29" Count="0" />
       <LineId Id="17" Count="1" />
@@ -171,6 +177,7 @@ END_VAR
     </LineIds>
     <LineIds Name="FB_Event.M_Info">
       <LineId Id="29" Count="0" />
+      <LineId Id="35" Count="0" />
       <LineId Id="13" Count="1" />
       <LineId Id="27" Count="0" />
       <LineId Id="15" Count="1" />
@@ -181,6 +188,7 @@ END_VAR
     </LineIds>
     <LineIds Name="FB_Event.M_Warning">
       <LineId Id="31" Count="0" />
+      <LineId Id="36" Count="0" />
       <LineId Id="15" Count="1" />
       <LineId Id="29" Count="0" />
       <LineId Id="17" Count="1" />
