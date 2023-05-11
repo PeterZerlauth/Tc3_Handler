@@ -70,25 +70,41 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF nLength < 100 THEN
+        <ST><![CDATA[// Update list
+IF nLength < 100 THEN
 	nFind:= M_Find(stEvent);
 	IF nFind = -1 THEN
 		aEvents[nLength]:= stEvent;
 		nLength:= nLength + 1;
 	ELSE
-		aEvents[nFind]:= stEvent;
-		CASE aEvents[nFind].eEvent OF
-			E_Event.Debug:
-				bDebug:= TRUE;
-			E_Event.Info:
-				bInfo:= TRUE;
-			E_Event.Warning:
-				bWarning:= TRUE;
-			E_Event.Error:
-				bError:= TRUE;
-		END_CASE
-		
+		aEvents[nFind]:= stEvent;		
 	END_IF
+END_IF
+
+// Update outputs
+CASE stEvent.eEvent OF
+	E_Event.Debug:
+		bDebug:= TRUE;
+	E_Event.Info:
+		bInfo:= TRUE;
+	E_Event.Warning:
+		bWarning:= TRUE;
+	E_Event.Error:
+		bError:= TRUE;
+END_CASE
+
+// Update Logger
+IF stEvent.bEvent THEN
+	CASE stEvent.eEvent OF
+		E_Event.Debug:
+			ADSLOGSTR(ADSLOG_MSGTYPE_HINT OR ADSLOG_MSGTYPE_LOG, stEvent.sMessage, '');
+		E_Event.Info:
+			ADSLOGSTR(ADSLOG_MSGTYPE_HINT OR ADSLOG_MSGTYPE_LOG, stEvent.sMessage, '');
+		E_Event.Warning:
+			ADSLOGSTR(ADSLOG_MSGTYPE_WARN OR ADSLOG_MSGTYPE_LOG, stEvent.sMessage, '');
+		E_Event.Error:
+			ADSLOGSTR(ADSLOG_MSGTYPE_ERROR OR ADSLOG_MSGTYPE_LOG, stEvent.sMessage, '');
+	END_CASE
 END_IF
 
 SUPER^.M_Request(stEvent);]]></ST>
@@ -118,18 +134,18 @@ SUPER^.M_Request(stEvent);]]></ST>
       <LineId Id="7" Count="0" />
     </LineIds>
     <LineIds Name="FB_EventHandler.M_Request">
+      <LineId Id="68" Count="0" />
       <LineId Id="28" Count="5" />
-      <LineId Id="37" Count="0" />
-      <LineId Id="39" Count="0" />
-      <LineId Id="41" Count="0" />
-      <LineId Id="43" Count="0" />
-      <LineId Id="45" Count="0" />
-      <LineId Id="44" Count="0" />
-      <LineId Id="46" Count="3" />
-      <LineId Id="42" Count="0" />
-      <LineId Id="40" Count="0" />
-      <LineId Id="38" Count="0" />
-      <LineId Id="26" Count="1" />
+      <LineId Id="37" Count="1" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="84" Count="0" />
+      <LineId Id="58" Count="9" />
+      <LineId Id="57" Count="0" />
+      <LineId Id="83" Count="0" />
+      <LineId Id="82" Count="0" />
+      <LineId Id="71" Count="10" />
+      <LineId Id="69" Count="0" />
+      <LineId Id="27" Count="0" />
       <LineId Id="5" Count="0" />
     </LineIds>
   </POU>
